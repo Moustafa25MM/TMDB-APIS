@@ -12,11 +12,11 @@ export const createDefaultAdmin = async () => {
 
     const adminExists = await client.user.findFirst({ where: { role: UserRole.ADMIN } });
     if (!adminExists) {
+        console.log(`Creating a default admin with username: ${defaultAdmin.username} and email: ${defaultAdmin.email} and password: ${defaultAdmin.password}`);
         defaultAdmin.password = await hashPassword(defaultAdmin.password);
         await client.user.create({
             data: defaultAdmin
         });
-        console.log('Default admin created successfully.');
     } else {
         console.log('Admin already exists.');
     }

@@ -5,6 +5,8 @@ import { client } from './database/client';
 import { indexRouter } from './routes';
 import exceptionHandler from './middlewares/exceptionHandlers';
 import { createDefaultAdmin } from './scripts/createDefaultAdmin';
+import { importMovies } from './scripts/importMovies';
+import { deleteAllMoviesAndGenres } from './scripts/deleteImportedMovies';
 
 dotenv.config();
 
@@ -12,9 +14,11 @@ const app: Express = express();
 app.use(express.json());
 app.use(morgan('tiny'));
 
-client.$connect().then(() => {
-  createDefaultAdmin();
+client.$connect().then(async () => {
   console.log('Successfully Connected to Database.');
+  // await createDefaultAdmin();
+  // await importMovies();
+  // await deleteAllMoviesAndGenres();
 });
 
 
