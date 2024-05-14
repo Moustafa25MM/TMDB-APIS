@@ -1,4 +1,3 @@
-import { Prisma, PrismaClient } from '@prisma/client';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { paginationOption } from '../../lib/pagination';
@@ -7,8 +6,6 @@ import HttpException from '../../core/exceptions/HttpException';
 import { validationHandler } from '../../core/handlers/validationHandler';
 import { client } from '../../database/client';
 import { SERVER_ERROR } from '../../core/exceptions';
-
-const prisma = new PrismaClient();
 
 const movieQuerySchema = z.object({
     title: z.string().optional(),
