@@ -1,6 +1,6 @@
 import { client } from "../database/client";
 import { hashPassword } from "../lib/password";
-import { UserRole } from "../middlewares/roles";
+import { UserRole } from "../types/roles";
 
 export const createDefaultAdmin = async () => {
     const defaultAdmin = {

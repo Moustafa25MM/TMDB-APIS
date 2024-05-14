@@ -11,6 +11,7 @@ type TokenPayload = {
     id: string;
 };
 
+
 const generateJWT = (payload: TokenPayload): String =>
     jwt.sign(payload, JWTSecret as string, { expiresIn: '7d' });
 

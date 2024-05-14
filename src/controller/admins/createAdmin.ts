@@ -8,6 +8,27 @@ export const createAdmin = async (req: Request, res: Response, next: NextFunctio
 
     try {
         const { username, email, password } = req.body;
+
+        const existingUsername = await client.user.findFirst({
+            where: { username }
+        });
+
+        const existingEmail = await client.user.findFirst({
+            where: { email }
+        });
+
+        let errorDetails = [];
+        if (existingUsername) {
+            errorDetails.push('Username already exists');
+        }
+        if (existingEmail) {
+            errorDetails.push('Email already exists');
+        }
+
+        if (errorDetails.length > 0) {
+            return next(new HttpException(FORBIDDEN, { message: errorDetails.join(' and ') }));
+        }
+
         const hashedPassword = await hashPassword(password);
 
         const newAdmin = await client.user.create({
