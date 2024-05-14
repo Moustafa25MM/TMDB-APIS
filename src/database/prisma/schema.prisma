@@ -13,9 +13,57 @@ model User {
   email     String      @unique
   role      UserRole    @default(USER)
   password  String
+  watchlist Watchlist[]
+  favorites Favorite[]
 }
 
-export enum UserRole {
+enum UserRole {
   ADMIN
   USER
+}
+
+
+model Movie {
+  id        Int      @id @default(autoincrement())
+  title     String
+  director  String
+  year      Int
+  country   String
+  length    Int
+  genres    MovieGenre[]
+  colour    String
+  watchlists Watchlist[] 
+  favorites Favorite[]  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Genre {
+  id      Int         @id @default(autoincrement())
+  name    String      @unique
+  movies  MovieGenre[]
+}
+
+model MovieGenre {
+  movie   Movie   @relation(fields: [movieId], references: [id])
+  movieId Int
+  genre   Genre   @relation(fields: [genreId], references: [id])
+  genreId Int
+  @@id([movieId, genreId])
+}
+
+model Watchlist {
+  id      Int      @id @default(autoincrement())
+  userId  String  
+  user    User     @relation(fields: [userId], references: [id])
+  movieId Int      
+  movie   Movie    @relation(fields: [movieId], references: [id])
+}
+
+model Favorite {
+  id      Int      @id @default(autoincrement())
+  userId  String   
+  user    User     @relation(fields: [userId], references: [id])
+  movieId Int      
+  movie   Movie    @relation(fields: [movieId], references: [id])
 }
