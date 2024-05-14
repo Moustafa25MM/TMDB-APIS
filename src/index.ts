@@ -2,6 +2,8 @@ import express, { Express, Response, Request } from 'express';
 import * as dotenv from 'dotenv';
 import morgan from 'morgan';
 import { client } from './database/client';
+import { indexRouter } from './routes';
+import exceptionHandler from './middlewares/exceptionHandlers';
 
 dotenv.config();
 
@@ -14,9 +16,8 @@ client.$connect().then(() => {
 });
 
 
-app.use('/', (req: Request, res: Response) => {
-  return res.status(200).send('Hello from Node TS');
-});
+app.use(indexRouter);
+app.use(exceptionHandler);
 
 const port = process.env.PORT;
 app.listen(port, () => {
