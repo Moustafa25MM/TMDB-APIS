@@ -1,6 +1,6 @@
 import { client } from "../database/client";
 import { hashPassword } from "../lib/password";
-import { UserRole } from "@prisma/client";
+import { UserRole } from "../middlewares/roles";
 
 export const createDefaultAdmin = async () => {
     const defaultAdmin = {
