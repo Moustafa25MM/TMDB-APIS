@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { client } from './database/client';
 import { indexRouter } from './routes';
 import exceptionHandler from './middlewares/exceptionHandlers';
+import { createDefaultAdmin } from './scripts/createDefaultAdmin';
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 
 client.$connect().then(() => {
+  createDefaultAdmin();
   console.log('Successfully Connected to Database.');
 });
 

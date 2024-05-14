@@ -32,7 +32,7 @@ export const login = async (request: Request, response: Response, next: NextFunc
 
         const token = authMethods.generateJWT({ id: user.id });
 
-        return requestHandler.sendSuccess(response, 'Login successful', 200)({ token });
+        return requestHandler.sendSuccess(response, 'Login successful', 200)({ token, role: user.role });
     } catch (error) {
         console.error('Error during login:', error);
         next(new HttpException(SERVER_ERROR, { message: 'Server error during login' }));
