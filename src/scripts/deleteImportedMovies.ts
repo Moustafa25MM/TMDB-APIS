@@ -7,6 +7,10 @@ export const deleteAllMoviesAndGenres = async (): Promise<void> => {
 
         await client.genre.deleteMany({});
 
+        await client.watchlist.deleteMany({});
+
+        await client.favorite.deleteMany({});
+
         await client.movie.deleteMany({});
 
         logger.info('All movies and genres have been successfully deleted.');

@@ -7,6 +7,6 @@ export const globalLimiter = rateLimit({
 
 export const sensitiveLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
-    max: 5,
+    max: 20,
     message: "Too many requests, please try again later."
 });

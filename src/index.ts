@@ -6,7 +6,6 @@ import { indexRouter } from './routes';
 import exceptionHandler from './middlewares/exceptionHandlers';
 import { createDefaultAdmin } from './scripts/createDefaultAdmin';
 import { importMovies } from './scripts/importMovies';
-import { deleteAllMoviesAndGenres } from './scripts/deleteImportedMovies';
 import logger from './utils/logger';
 
 dotenv.config();
@@ -17,9 +16,8 @@ app.use(morgan('tiny'));
 
 client.$connect().then(async () => {
   logger.info('Successfully Connected to Database.');
-  // await createDefaultAdmin();
-  // await importMovies();
-  // await deleteAllMoviesAndGenres();
+  await createDefaultAdmin();
+  await importMovies();
 });
 
 
