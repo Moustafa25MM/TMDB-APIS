@@ -3,6 +3,7 @@ import csv from 'csv-parser';
 import { client } from '../database/client';
 import path from 'path';
 import { Movie } from '../types/Movie';
+import logger from '../utils/logger';
 
 export const importMovies = async (): Promise<void> => {
     const filePath = path.join(__dirname, '../../data/1000GreatestFilms.csv');
@@ -31,7 +32,7 @@ export const importMovies = async (): Promise<void> => {
             });
         })
         .on('end', async () => {
-            console.log('Starting the import of movies...');
+            logger.info('Starting the import of movies...');
             try {
                 for (const { movieData, genreNames } of moviesToImport) {
                     const createdMovie = await client.movie.create({
@@ -63,12 +64,12 @@ export const importMovies = async (): Promise<void> => {
                     }
                     processedCount++;
                     if (processedCount % 100 === 0 || processedCount === moviesToImport.length) {
-                        console.log(`Processed ${processedCount}/${moviesToImport.length} movies.`);
+                        logger.info(`Processed ${processedCount}/${moviesToImport.length} movies.`);
                     }
                 }
-                console.log('Movies have been successfully imported.');
+                logger.info('Movies have been successfully imported.');
             } catch (error) {
-                console.error('Failed to import movies:', error);
+                logger.error('Failed to import movies:', error);
             } finally {
                 await client.$disconnect();
             }

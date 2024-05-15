@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../index';
 import { client } from '../database/client';
+import logger from '../utils/logger';
 
 describe('Login Endpoint', () => {
     const userCredentials = {
@@ -18,7 +19,7 @@ describe('Login Endpoint', () => {
                 .send(userCredentials);
             userId = res.body.data.user.id;
         } catch (error) {
-            console.error('Error during user registration in beforeAll:', error);
+            logger.error('Error during user registration in beforeAll:', error);
         }
     });
 

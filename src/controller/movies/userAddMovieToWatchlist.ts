@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { validationHandler } from '../../core/handlers/validationHandler';
 import { IAuthRequest } from '../../types/authRequest';
 import { Watchlist } from '../../types/WatchList';
+import logger from '../../utils/logger';
 
 const addToWatchlistSchema = z.object({
     movieId: z.number(),
@@ -47,7 +48,7 @@ export const addToWatchlist = async (req: IAuthRequest, res: Response, next: Nex
         });
 
     } catch (error) {
-        console.error("Failed to add movie to watchlist:", error);
+        logger.error("Failed to add movie to watchlist:", error);
         next(new HttpException(SERVER_ERROR, { message: 'Failed to add movie to watchlist' }));
     }
 };

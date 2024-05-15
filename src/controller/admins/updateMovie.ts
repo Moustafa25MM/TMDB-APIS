@@ -4,6 +4,7 @@ import { client } from '../../database/client';
 import requestHandler from '../../core/handlers/requestHandler';
 import { HttpException, SERVER_ERROR } from '../../core/exceptions';
 import { validationHandler } from '../../core/handlers/validationHandler';
+import logger from '../../utils/logger';
 
 
 const updateMovieSchema = z.object({
@@ -83,7 +84,7 @@ export const updateMovie = async (req: Request, res: Response, next: NextFunctio
         });
 
     } catch (error) {
-        console.error("Failed to update movie:", error);
+        logger.error("Failed to update movie:", error);
         next(new HttpException(SERVER_ERROR, { message: 'Failed to update movie' }));
     }
 };

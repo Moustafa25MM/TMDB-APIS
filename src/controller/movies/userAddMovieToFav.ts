@@ -7,6 +7,7 @@ import { IAuthRequest } from '../../types/authRequest';
 import { z } from 'zod';
 import { validationHandler } from '../../core/handlers/validationHandler';
 import { fetchMovieDetails, searchMoviesByTitle } from '../../services/tmdbService';
+import logger from '../../utils/logger';
 
 const addToFavSchema = z.object({
     movieId: z.number(),
@@ -62,7 +63,7 @@ export const addToFavorites = async (req: IAuthRequest, res: Response, next: Nex
         });
 
     } catch (error) {
-        console.error("Failed to add movie to favorites:", error);
+        logger.error("Failed to add movie to favorites:", error);
         next(new HttpException(SERVER_ERROR, { message: 'Failed to add movie to favorites' }));
     }
 };

@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+import logger from '../utils/logger';
 
 export const redisClient = new Redis({
     host: 'localhost',
@@ -6,6 +7,6 @@ export const redisClient = new Redis({
     retryStrategy: times => Math.min(times * 50, 2000)
 });
 
-redisClient.on('connect', () => console.log('Connected to Redis'));
-redisClient.on('error', (err) => console.error('Redis Client Error', err));
+redisClient.on('connect', () => logger.info('Connected to Redis'));
+redisClient.on('error', (err) => logger.error('Redis Client Error', err));
 

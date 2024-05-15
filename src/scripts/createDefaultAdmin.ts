@@ -1,6 +1,7 @@
 import { client } from "../database/client";
 import { hashPassword } from "../lib/password";
 import { UserRole } from "../types/roles";
+import logger from "../utils/logger";
 
 export const createDefaultAdmin = async () => {
     const defaultAdmin = {
@@ -12,12 +13,12 @@ export const createDefaultAdmin = async () => {
 
     const adminExists = await client.user.findFirst({ where: { role: UserRole.ADMIN } });
     if (!adminExists) {
-        console.log(`Creating a default admin with username: ${defaultAdmin.username} and email: ${defaultAdmin.email} and password: ${defaultAdmin.password}`);
+        logger.info(`Creating a default admin with username: ${defaultAdmin.username} and email: ${defaultAdmin.email} and password: ${defaultAdmin.password}`);
         defaultAdmin.password = await hashPassword(defaultAdmin.password);
         await client.user.create({
             data: defaultAdmin
         });
     } else {
-        console.log('Admin already exists.');
+        logger.info('Admin already exists.');
     }
 }

@@ -1,4 +1,5 @@
 import { client } from '../database/client';
+import logger from '../utils/logger';
 
 export const deleteAllMoviesAndGenres = async (): Promise<void> => {
     try {
@@ -8,9 +9,9 @@ export const deleteAllMoviesAndGenres = async (): Promise<void> => {
 
         await client.movie.deleteMany({});
 
-        console.log('All movies and genres have been successfully deleted.');
+        logger.info('All movies and genres have been successfully deleted.');
     } catch (error) {
-        console.error('Failed to delete movies and genres:', error);
+        logger.error('Failed to delete movies and genres:', error);
     } finally {
         await client.$disconnect();
     }

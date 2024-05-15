@@ -3,6 +3,7 @@ import { client } from '../../database/client';
 import { hashPassword } from '../../lib/password';
 import { HttpException, SERVER_ERROR, FORBIDDEN } from '../../core/exceptions';
 import requestHandler from '../../core/handlers/requestHandler';
+import logger from '../../utils/logger';
 
 export const createAdmin = async (req: Request, res: Response, next: NextFunction) => {
 
@@ -42,7 +43,7 @@ export const createAdmin = async (req: Request, res: Response, next: NextFunctio
 
         return requestHandler.sendSuccess(res, 'Admin created successfully', 201)({ user: newAdmin });
     } catch (error) {
-        console.error('Error during admin creation:', error);
+        logger.error('Error during admin creation:', error);
         next(new HttpException(SERVER_ERROR, { message: 'Server error during admin creation' }));
     }
 };

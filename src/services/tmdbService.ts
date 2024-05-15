@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as dotenv from 'dotenv';
+import logger from '../utils/logger';
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ export const fetchMovieDetails = async (movieId: string) => {
         const response = await tmdbApi.get(`/movie/${movieId}`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching movie details from TMDB:', error);
+        logger.error('Error fetching movie details from TMDB:', error);
         throw error;
     }
 };
@@ -29,7 +30,7 @@ export const searchMoviesByTitle = async (title: string) => {
         }
         return null;
     } catch (error) {
-        console.error('Error searching movies from TMDB:', error);
+        logger.error('Error searching movies from TMDB:', error);
         throw error;
     }
 };

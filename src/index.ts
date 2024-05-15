@@ -7,6 +7,7 @@ import exceptionHandler from './middlewares/exceptionHandlers';
 import { createDefaultAdmin } from './scripts/createDefaultAdmin';
 import { importMovies } from './scripts/importMovies';
 import { deleteAllMoviesAndGenres } from './scripts/deleteImportedMovies';
+import logger from './utils/logger';
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 
 client.$connect().then(async () => {
-  console.log('Successfully Connected to Database.');
+  logger.info('Successfully Connected to Database.');
   // await createDefaultAdmin();
   // await importMovies();
   // await deleteAllMoviesAndGenres();
@@ -27,5 +28,5 @@ app.use(exceptionHandler);
 
 const port = process.env.PORT;
 app.listen(port, () => {
-  console.log(`The server is running on port " ${port}"`);
+  logger.info(`The server is running on port " ${port}"`);
 });

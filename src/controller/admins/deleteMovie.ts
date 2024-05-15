@@ -5,6 +5,7 @@ import { client } from '../../database/client';
 import requestHandler from '../../core/handlers/requestHandler';
 import { HttpException, SERVER_ERROR } from '../../core/exceptions';
 import { validationHandler } from '../../core/handlers/validationHandler';
+import logger from '../../utils/logger';
 
 const deleteMovieSchema = z.object({
     id: z.string(),
@@ -35,7 +36,7 @@ export const deleteMovie = async (req: Request, res: Response, next: NextFunctio
         });
 
     } catch (error) {
-        console.error("Failed to delete movie:", error);
+        logger.error("Failed to delete movie:", error);
         next(new HttpException(SERVER_ERROR, { message: 'Failed to delete movie' }));
     }
 };
