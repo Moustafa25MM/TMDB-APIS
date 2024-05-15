@@ -4,6 +4,7 @@ import { getMovieDetailsByTitle, getMovieDetailsValidated } from '../controller/
 import { authMethods } from '../middlewares/auth';
 import { isUser } from '../middlewares/isUser';
 import { addMovieToWatchlistValidated, addToWatchlist } from '../controller/movies/userAddMovieToWatchlist';
+import { addMovieToFavValidated, addToFavorites } from '../controller/movies/userAddMovieToFav';
 
 const router = express.Router();
 
@@ -16,5 +17,10 @@ router.post('/add/to/watchlist',
     addMovieToWatchlistValidated,
     addToWatchlist);
 
+router.post('/add/to/fav',
+    authMethods.isAuthenicated,
+    isUser,
+    addMovieToFavValidated,
+    addToFavorites);
 
 export const MoivesRoutes: Router = router;
