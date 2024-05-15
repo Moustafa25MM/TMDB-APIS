@@ -6,6 +6,7 @@ import HttpException from '../../core/exceptions/HttpException';
 import { validationHandler } from '../../core/handlers/validationHandler';
 import { client } from '../../database/client';
 import { SERVER_ERROR } from '../../core/exceptions';
+import { redisClient } from '../../config/redisClient';
 
 const movieQuerySchema = z.object({
     title: z.string().optional(),
@@ -20,6 +21,15 @@ export const getAllMovies = async (req: Request, res: Response, next: NextFuncti
     try {
         const page = parseInt(req.query.page as string) || 1;
         const pageSize = parseInt(req.query.pageSize as string) || 10;
+
+        const baseKey = 'movies:';
+        const queryKey = `${baseKey}${JSON.stringify(req.query)}`;
+
+        const cachedMovies = await redisClient.get(queryKey);
+        if (cachedMovies) {
+            return requestHandler.sendSuccess(res, "Movies fetched from cache", 200)(JSON.parse(cachedMovies));
+        }
+
 
         const whereCondition: any = {
             ...(req.query.title && { title: { contains: req.query.title as string, mode: 'insensitive' as any } }),
@@ -42,10 +52,14 @@ export const getAllMovies = async (req: Request, res: Response, next: NextFuncti
 
         const paginationOptions = paginationOption(pageSize, page, totalDocs);
 
-        return requestHandler.sendSuccess(res, "Movies fetched successfully", 200)({
+        const result = {
             pagination: paginationOptions,
             movies,
-        });
+        };
+
+        await redisClient.set(queryKey, JSON.stringify(result), 'EX', 3600);
+
+        return requestHandler.sendSuccess(res, "Movies fetched successfully", 200)(result);
 
     } catch (error) {
         console.error("Failed to fetch movies:", error);
