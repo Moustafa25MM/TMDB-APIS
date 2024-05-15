@@ -36,6 +36,10 @@ model Movie {
   favorites Favorite[]  
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  tmdbId      Int?        
+  posterPath  String?     
+  description String?     
 }
 
 model Genre {
