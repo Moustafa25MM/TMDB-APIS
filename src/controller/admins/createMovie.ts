@@ -51,8 +51,7 @@ export const createMovie = async (req: Request, res: Response, next: NextFunctio
         });
 
     } catch (error) {
-        console.error("Failed to create movie:", error);
-        next(new HttpException(SERVER_ERROR, { message: 'Failed to create movie' }));
+        return res.status(SERVER_ERROR).json({ message: 'Failed to create movie' });
     }
 };
 
