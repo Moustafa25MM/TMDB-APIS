@@ -36,8 +36,7 @@ export const getMovieDetailsByTitle = async (req: Request, res: Response, next: 
             movie: movieDetails
         });
     } catch (error) {
-        console.error('Failed to fetch movie details:', error);
-        next(new HttpException(SERVER_ERROR, { message: 'Failed to fetch movie details' }));
+        res.status(SERVER_ERROR).json({ message: 'Failed to fetch movie details' })
     }
 };
 

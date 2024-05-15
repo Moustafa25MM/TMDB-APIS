@@ -62,8 +62,7 @@ export const getAllMovies = async (req: Request, res: Response, next: NextFuncti
         return requestHandler.sendSuccess(res, "Movies fetched successfully", 200)(result);
 
     } catch (error) {
-        console.error("Failed to fetch movies:", error);
-        next(new HttpException(SERVER_ERROR, { message: 'Failed to fetch movies' }));
+        res.status(SERVER_ERROR).json({ message: 'Failed to fetch movies' })
     }
 }
 export const getAllMoviesValidated = validationHandler({
