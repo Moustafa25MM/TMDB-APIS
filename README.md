@@ -18,6 +18,7 @@ docker-compose up
 or :
 
 npm install
+npm run db:push --> to migrate database
 npm start
 ```
 
@@ -32,8 +33,9 @@ TMDB_BASE_URL=
 API_KEY=
 REDIS_HOST=
 
-2. npm start -> to run the server
-3. npm test -> to run tests
+2. npm run db:push --> to migrate database
+3. npm start -> to run the server
+4. npm test -> to run tests
 
 ```
 

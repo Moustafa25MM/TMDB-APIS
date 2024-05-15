@@ -1,0 +1,16 @@
+{"level":"info","message":"The server is running on port \" 8080\"","service":"vending-machine-service"}
+{"level":"info","message":"Connected to Redis","service":"vending-machine-service"}
+{"level":"info","message":"Successfully Connected to Database.","service":"vending-machine-service"}
+{"level":"info","message":"Admin already exists.","service":"vending-machine-service"}
+{"level":"info","message":"Starting the import of movies...","service":"vending-machine-service"}
+{"level":"info","message":"Processed 100/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 200/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 300/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 400/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 500/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 600/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 700/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 800/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 900/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Processed 1000/1000 movies.","service":"vending-machine-service"}
+{"level":"info","message":"Movies have been successfully imported.","service":"vending-machine-service"}
