@@ -3,6 +3,7 @@ import { app } from '../index';
 import { client } from '../database/client';
 
 describe('Register Endpoint', () => {
+    let createdUserIds: string[] = [];
 
     it('should successfully register a new user', async () => {
         const newUser = {
@@ -17,12 +18,13 @@ describe('Register Endpoint', () => {
             .expect(201);
 
         expect(response.body.message).toBe('User created successfully');
+        createdUserIds.push(response.body.data.user.id);
     })
 
     it('should reject registration with existing username', async () => {
         const newUser = {
-            username: 'Test User',
-            email: 'uniqueEmail@example.com',
+            username: 'UniqueUser123456',
+            email: 'uniqueEmail123765@example.com',
             password: 'password',
         };
 
@@ -37,7 +39,7 @@ describe('Register Endpoint', () => {
     it('should reject registration with existing email', async () => {
         const newUser = {
             username: 'UniqueUser',
-            email: 'testUser@example.com',
+            email: 'UniqueUser123456@example.com',
             password: 'password',
         };
 
@@ -64,5 +66,14 @@ describe('Register Endpoint', () => {
 
         expect(response.status).toBe(500);
         expect(response.body.message).toBe('Server error during user registration');
+    });
+
+    afterAll(async () => {
+        if (createdUserIds) {
+            await Promise.all(createdUserIds.map(id => client.user.delete({
+                where: { id }
+            })));
+        }
+        createdUserIds = [];
     });
 });

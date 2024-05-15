@@ -1,19 +1,11 @@
 import { app } from '..';
 import { redisClient } from '../config/redisClient';
-import { fetchMovieDetails, searchMoviesByTitle } from '../services/tmdbService';
-
 import request from 'supertest';
 
-const tmdbService = {
-    searchMoviesByTitle,
-    fetchMovieDetails
-};
 
 describe('GET /movies/details/:title', () => {
     const title = "Citizen";
-    const cacheKey = `movieDetails:${title}`;
     const mockMovie = { id: 1, title: 'Citizen', director: 'Christopher Nolan' };
-    const movieDetails = { id: 1, detail: 'Some movie details here...' };
 
     beforeEach(() => {
         spyOn(redisClient, 'get').and.callFake((key) => {
