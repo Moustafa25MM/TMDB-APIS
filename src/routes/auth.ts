@@ -3,6 +3,7 @@ import { register, registrationSchema } from '../controller/users/register';
 import { login, loginSchema } from '../controller/users/login';
 
 import { validationHandler } from '../core/handlers/validationHandler';
+import { sensitiveLimiter } from '../middlewares/rateLimit';
 
 const registrationValidationRules = {
     body: registrationSchema,
@@ -16,6 +17,6 @@ const loginValidationRules = {
 const router = Router();
 
 router.post('/register', validationHandler(registrationValidationRules), register);
-router.post('/login', validationHandler(loginValidationRules), login);
+router.post('/login', sensitiveLimiter, validationHandler(loginValidationRules), login);
 
 export const AuthRoutes: Router = router;

@@ -5,8 +5,11 @@ import { authMethods } from '../middlewares/auth';
 import { isUser } from '../middlewares/isUser';
 import { addMovieToWatchlistValidated, addToWatchlist } from '../controller/movies/userAddMovieToWatchlist';
 import { addMovieToFavValidated, addToFavorites } from '../controller/movies/userAddMovieToFav';
+import { sensitiveLimiter } from '../middlewares/rateLimit';
 
 const router = express.Router();
+
+router.use(sensitiveLimiter);
 
 router.get('/get/all', getAllMoviesValidated, getAllMovies);
 router.get('/details/:title', getMovieDetailsValidated, getMovieDetailsByTitle);
