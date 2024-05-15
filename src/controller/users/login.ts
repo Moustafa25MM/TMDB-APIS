@@ -34,7 +34,6 @@ export const login = async (request: Request, response: Response, next: NextFunc
 
         return requestHandler.sendSuccess(response, 'Login successful', 200)({ token, role: user.role });
     } catch (error) {
-        console.error('Error during login:', error);
-        next(new HttpException(SERVER_ERROR, { message: 'Server error during login' }));
+        return response.status(SERVER_ERROR).json({ message: 'Server error during user login' })
     }
 };

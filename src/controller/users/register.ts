@@ -39,7 +39,7 @@ export const register = async (request: Request, response: Response, next: NextF
         }
 
         if (errorDetails.length > 0) {
-            return next(new HttpException(FORBIDDEN, { message: errorDetails.join(' and ') }));
+            return next(new HttpException(BAD_REQUEST, { message: errorDetails.join(' and ') }));
         }
 
         const hashedPassword = await hashPassword(password);
@@ -53,7 +53,6 @@ export const register = async (request: Request, response: Response, next: NextF
 
         return requestHandler.sendSuccess(response, 'User created successfully', 201)({ user: newUser });
     } catch (error) {
-        console.error('Error during registration:', error);
-        next(new HttpException(SERVER_ERROR, { message: 'Server error during user registration' }));
+        return response.status(SERVER_ERROR).json({ message: 'Server error during user registration' })
     }
 };
