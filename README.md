@@ -504,14 +504,5 @@ It will return an object like this:
         }
     }
 }
-
-
-
-
-
-
-
-
-
 ```
 
